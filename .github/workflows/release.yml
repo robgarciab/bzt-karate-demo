@@ -29,6 +29,8 @@ jobs:
           path: target/examples-gatling-1.5.0-shaded.jar
 
   release:
+    permissions:
+      contents: write
     needs: build
     runs-on: ubuntu-latest
     steps:
