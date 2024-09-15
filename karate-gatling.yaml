@@ -1,8 +1,17 @@
+# Blazemeter setup, comment to use local setup
+services:
+  - module: shellexec
+    prepare:
+      - wget https://github.com/robgarciab/bzt-karate-demo/releases/download/v1.0.12/examples-gatling-1.5.0-shaded.jar
+
 execution:
 - executor: gatling
   scenario: karate
 
 scenarios:
   karate:
-    script: target/examples-gatling-1.5.0-shaded.jar
+    # local setup
+    # script: target/examples-gatling-1.5.0-shaded.jar
+    # Blazemeter setup
+    script: examples-gatling-1.5.0-shaded.jar
     simulation: mock.CatsKarateSimulation
