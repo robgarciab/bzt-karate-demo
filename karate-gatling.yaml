@@ -1,0 +1,8 @@
+execution:
+- executor: gatling
+  scenario: karate
+
+scenarios:
+  karate:
+    script: target/examples-gatling-1.5.0-shaded.jar
+    simulation: mock.CatsKarateSimulation
