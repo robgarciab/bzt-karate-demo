@@ -4,5 +4,4 @@ build/
 gradle/
 .idea/
 .gradle/
-.mvn/
 *.iml
