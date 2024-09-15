@@ -1,0 +1,57 @@
+name: Build and Release JAR
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger on version tags, e.g., v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # Choose the JDK distribution
+          java-version: '17' # Use the appropriate Java version for your project
+
+      - name: Build with Maven
+        run: ./mvnw gatling:enterprisePackage
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: shaded-jar
+          path: target/examples-gatling-1.5.0-shaded.jar
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: shaded-jar
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}  # Use the tag name for the release
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload JAR to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/examples-gatling-1.5.0-shaded.jar
+          asset_name: examples-gatling-1.5.0-shaded.jar
+          asset_content_type: application/java-archive
