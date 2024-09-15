@@ -16,8 +16,8 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Choose the JDK distribution
-          java-version: '17' # Use the appropriate Java version for your project
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Build with Maven
         run: ./mvnw gatling:enterprisePackage
@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}  # Use the tag name for the release
+          tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
