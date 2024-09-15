@@ -39,6 +39,9 @@ jobs:
         with:
           name: shaded-jar
 
+      - name: List downloaded artifact files
+        run: ls -al /home/runner/work/bzt-karate-demo/bzt-karate-demo
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
