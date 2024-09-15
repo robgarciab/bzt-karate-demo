@@ -41,7 +41,7 @@ jobs:
 
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.10.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -49,6 +49,10 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
+      - name: Debug upload URL
+        run:
+          echo "Upload URL: ${{ steps.create_release.outputs.upload_url }}"
 
       - name: Upload JAR to GitHub Release
         uses: actions/upload-release-asset@v1
