@@ -51,7 +51,8 @@ jobs:
           prerelease: false
 
       - name: Debug upload URL
-        run: echo "Upload URL: ${{ steps.create_release.outputs.upload_url }}"
+        run: |
+          echo "Upload URL: ${{ steps.create_release.outputs.upload_url }}"
 
       - name: Upload JAR to GitHub Release
         uses: actions/upload-release-asset@v1
