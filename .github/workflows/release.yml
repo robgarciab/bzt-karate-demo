@@ -39,9 +39,6 @@ jobs:
         with:
           name: shaded-jar
 
-      - name: List downloaded artifact files
-        run: ls -al /home/runner/work/bzt-karate-demo/bzt-karate-demo
-
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -57,6 +54,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bzt-karate-demo/examples-gatling-1.5.0-shaded.jar
+          asset_path: /home/runner/work/bzt-karate-demo/bzt-karate-demo/examples-gatling-1.5.0-shaded.jar
           asset_name: examples-gatling-1.5.0-shaded.jar
           asset_content_type: application/java-archive
