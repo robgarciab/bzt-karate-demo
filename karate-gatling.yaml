@@ -1,7 +1,10 @@
-# Blazemeter setup, comment to use local setup
+# Blazemeter setup, comment to run locally
 services:
   - module: shellexec
     prepare:
+      # Setup Java 17
+      - update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+      # Download JAR file
       - wget https://github.com/robgarciab/bzt-karate-demo/releases/download/v1.0.12/examples-gatling-1.5.0-shaded.jar
 
 execution:
@@ -10,8 +13,6 @@ execution:
 
 scenarios:
   karate:
-    # local setup
-    # script: target/examples-gatling-1.5.0-shaded.jar
-    # Blazemeter setup
-    script: examples-gatling-1.5.0-shaded.jar
+    # script: examples-gatling-1.5.0-shaded.jar
+    script: target/examples-gatling-1.5.0-shaded.jar
     simulation: mock.CatsKarateSimulation
