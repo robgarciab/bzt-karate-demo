@@ -9,6 +9,10 @@ class CatsKarateSimulation extends Simulation {
 
   MockUtils.startServer()
 
+  // parse load profile from Taurus
+  val t_concurrency = Integer.getInteger("concurrency", 10).toInt
+  val t_holdFor = Integer.getInteger("hold-for", 60).toInt
+
   val feeder = Iterator.continually(Map("catName" -> MockUtils.getNextCatName))
 
   val protocol = karateProtocol(
@@ -25,9 +29,8 @@ class CatsKarateSimulation extends Simulation {
   val custom = scenario("custom").exec(karateFeature("classpath:mock/custom-rpc.feature"))
 
   setUp(
-    create.inject(rampUsers(50) during (5 minute)).protocols(protocol),
-    delete.inject(rampUsers(25) during (5 minute)).protocols(protocol),
-    custom.inject(rampUsers(50) during (5 minute)).protocols(protocol)
+    create.inject(constantUsersPerSec(t_concurrency) during (t_holdFor seconds)).protocols(protocol),
+    delete.inject(constantUsersPerSec(t_concurrency) during (t_holdFor seconds)).protocols(protocol)
   )
 
 }
